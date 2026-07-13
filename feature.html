@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Red de Confianza — UberHome Servicios</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  :root {
+    --green: #06C167;
+    --green-dark: #059952;
+    --black: #000000;
+    --dark: #111111;
+    --gray: #1a1a1a;
+    --text-secondary: #888;
+    --text-muted: #555;
+    --white: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(0,0,0,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #1a1a1a;
+    padding: 0 5%;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-wordmark { font-size: 22px; font-weight: 900; color: var(--white); letter-spacing: -0.5px; }
+  .nav-product {
+    font-size: 13px; font-weight: 700; color: var(--green);
+    letter-spacing: 2px; text-transform: uppercase;
+    padding: 3px 10px; border: 1.5px solid #06C16740;
+    border-radius: 20px; background: #06C16710;
+  }
+  .nav-back {
+    color: var(--text-secondary); font-size: 14px; font-weight: 500;
+    text-decoration: none; transition: color 0.2s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .nav-back:hover { color: var(--white); }
+
+  /* HERO */
+  .hero {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 5% 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 40%, #06C16714 0%, transparent 70%);
+  }
+  .hero-content { position: relative; z-index: 2; max-width: 700px; margin: 0 auto; text-align: center; }
+
+  .new-badge-hero {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--green);
+    color: var(--black);
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 28px;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+  }
+
+  .hero-title {
+    font-size: clamp(40px, 6vw, 72px);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -2px;
+    margin-bottom: 20px;
+  }
+  .hero-title span { color: var(--green); }
+
+  .hero-subtitle {
+    font-size: 18px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 480px;
+    margin: 0 auto 48px;
+  }
+
+  /* HOW IT WORKS */
+  .section { padding: 80px 5%; }
+  .section-center { text-align: center; }
+  .section-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--green); margin-bottom: 16px;
+    display: block;
+  }
+  .section-title {
+    font-size: clamp(28px, 4vw, 44px); font-weight: 900;
+    line-height: 1.1; letter-spacing: -1px; margin-bottom: 12px;
+  }
+  .section-sub {
+    font-size: 16px; color: var(--text-secondary);
+    line-height: 1.7; max-width: 520px; margin: 0 auto 60px;
+  }
+
+  /* STEPS */
+  .steps { display: flex; flex-direction: column; gap: 0; max-width: 640px; margin: 0 auto; }
+  .step {
+    display: flex;
+    gap: 24px;
+    padding: 32px 0;
+    border-bottom: 1px solid #1a1a1a;
+    align-items: flex-start;
+  }
+  .step:last-child { border-bottom: none; }
+  .step-num-big {
+    font-size: 48px;
+    font-weight: 900;
+    color: #06C16720;
+    letter-spacing: -2px;
+    line-height: 1;
+    min-width: 60px;
+    flex-shrink: 0;
+  }
+  .step-content { flex: 1; padding-top: 6px; }
+  .step-title { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+  .step-desc { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+
+  /* DEMO MOCKUP */
+  .demo-section {
+    padding: 80px 5%;
+    background: var(--dark);
+    border-top: 1px solid #1a1a1a;
+    border-bottom: 1px solid #1a1a1a;
+  }
+  .demo-inner {
+    max-width: 480px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .mockup-card {
+    background: #0a0a0a;
+    border: 1.5px solid #222;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 40px auto 0;
+    max-width: 340px;
+    text-align: left;
+  }
+  .mockup-header {
+    display: flex; align-items: center; gap: 10px;
+    padding-bottom: 14px; border-bottom: 1px solid #1a1a1a; margin-bottom: 14px;
+  }
+  .mockup-icon {
+    width: 40px; height: 40px; border-radius: 10px; background: var(--green);
+    display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;
+  }
+  .mockup-title { font-size: 15px; font-weight: 700; }
+  .mockup-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+  .trust-row {
+    background: #06C16710;
+    border: 1px solid #06C16730;
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 8px;
+  }
+  .trust-label {
+    font-size: 10px; font-weight: 700; color: var(--green);
+    letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px;
+  }
+  .trust-person {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 6px;
+  }
+  .trust-avatar {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: #1a1a1a; display: flex; align-items: center; justify-content: center; font-size: 12px;
+    flex-shrink: 0;
+  }
+  .trust-name { font-size: 12px; font-weight: 600; color: var(--white); }
+  .trust-when { font-size: 10px; color: var(--text-muted); }
+  .trust-rating { font-size: 10px; color: var(--green); margin-left: auto; }
+
+  .tech-row {
+    background: #111; border: 1px solid #1e1e1e;
+    border-radius: 12px; padding: 12px;
+    display: flex; gap: 10px; align-items: center;
+  }
+  .tech-icon { font-size: 24px; flex-shrink: 0; }
+  .tech-name { font-size: 13px; font-weight: 700; }
+  .tech-meta { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+  /* COMING SOON */
+  .coming-soon {
+    padding: 120px 5%;
+    text-align: center;
+    background: var(--black);
+    position: relative;
+    overflow: hidden;
+  }
+  .coming-soon-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 50% 50%, #06C16710 0%, transparent 70%);
+  }
+  .coming-soon-content { position: relative; z-index: 2; }
+
+  .coming-badge {
+    display: inline-block;
+    background: transparent;
+    border: 2px solid #06C16740;
+    color: var(--green);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 8px 20px;
+    border-radius: 4px;
+    margin-bottom: 32px;
+  }
+
+  .coming-title {
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 900;
+    letter-spacing: -4px;
+    line-height: 0.95;
+    margin-bottom: 24px;
+    color: var(--white);
+  }
+  .coming-title span { color: var(--green); }
+
+  .coming-sub {
+    font-size: 18px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 480px;
+    margin: 0 auto 48px;
+  }
+
+  .email-form {
+    display: flex;
+    gap: 10px;
+    max-width: 420px;
+    margin: 0 auto 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .email-input {
+    flex: 1;
+    min-width: 220px;
+    background: #111;
+    border: 1.5px solid #2a2a2a;
+    color: var(--white);
+    font-size: 14px;
+    padding: 14px 18px;
+    border-radius: 50px;
+    outline: none;
+    font-family: 'Inter', sans-serif;
+    transition: border-color 0.2s;
+  }
+  .email-input:focus { border-color: var(--green); }
+  .email-input::placeholder { color: var(--text-muted); }
+
+  .btn-primary {
+    background: var(--green);
+    color: var(--black);
+    font-size: 14px;
+    font-weight: 800;
+    padding: 14px 24px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .btn-primary:hover { background: var(--green-dark); }
+
+  .form-note { font-size: 12px; color: var(--text-muted); }
+  .form-success {
+    display: none;
+    background: #06C16720;
+    border: 1px solid #06C16740;
+    border-radius: 12px;
+    padding: 16px 24px;
+    color: var(--green);
+    font-size: 14px;
+    font-weight: 600;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-muted);
+    font-size: 14px;
+    text-decoration: none;
+    margin-top: 32px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--white); }
+
+  footer {
+    background: var(--black);
+    border-top: 1px solid #1a1a1a;
+    padding: 32px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .footer-logo { font-size: 18px; font-weight: 900; }
+  .footer-note { font-size: 11px; color: var(--text-muted); max-width: 400px; line-height: 1.6; }
+
+  @media (max-width: 600px) {
+    .coming-title { letter-spacing: -2px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <span class="nav-wordmark">UberHome</span>
+    <span class="nav-product">Servicios</span>
+  </a>
+  <a href="index.html" class="nav-back">← Volver al inicio</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="new-badge-hero">✦ Nueva función</div>
+    <h1 class="hero-title">Red de<br><span>Confianza</span></h1>
+    <p class="hero-subtitle">Antes de contratar a un desconocido, ahora puedes ver si alguien en tu red ya confió en ese técnico — y cómo le fue.</p>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section section-center">
+  <span class="section-label">Cómo funciona</span>
+  <h2 class="section-title">Simple. Tuyo. Confiable.</h2>
+  <p class="section-sub">La recomendación de alguien cercano, disponible en cualquier momento — incluso cuando no tienes a quién llamar.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num-big">01</div>
+      <div class="step-content">
+        <div class="step-title">Elige a quién sigues</div>
+        <div class="step-desc">Tú decides quién hace parte de tu red dentro de la app. Puedes seguir a amigos, familiares o vecinos que ya usen UberHome. Solo tú controlas quién entra a tu círculo — nadie se agrega sin tu permiso.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num-big">02</div>
+      <div class="step-content">
+        <div class="step-title">Ve quién ya contrató a ese técnico</div>
+        <div class="step-desc">Al buscar un técnico, la app te muestra si alguien en tu red ya lo usó y qué calificación le dio. No más estrellas de desconocidos — ahora sabes si María, tu vecina, o tu hermano ya confió en esa persona.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num-big">03</div>
+      <div class="step-content">
+        <div class="step-title">Decide con la misma confianza que una recomendación en persona</div>
+        <div class="step-desc">La señal de tu red reemplaza la llamada de "¿conoces a alguien de confianza para esto?". Funciona especialmente en urgencias: cuando algo se daña a las 10pm, tu red ya tiene la respuesta.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO MOCKUP -->
+<section class="demo-section">
+  <div class="demo-inner">
+    <span class="section-label">Así se ve</span>
+    <h2 class="section-title">Tu red, en la app.</h2>
+
+    <div class="mockup-card">
+      <div class="mockup-header">
+        <div class="mockup-icon">🔧</div>
+        <div>
+          <div class="mockup-title">Carlos M. · Plomería</div>
+          <div class="mockup-sub">⭐ 4.9 · 127 servicios · 15 min</div>
+        </div>
+      </div>
+
+      <div class="trust-row">
+        <div class="trust-label">👥 Tu red dice</div>
+        <div class="trust-person">
+          <div class="trust-avatar">👩</div>
+          <div>
+            <div class="trust-name">María (contacto)</div>
+            <div class="trust-when">Hace 2 semanas · Fuga de agua</div>
+          </div>
+          <div class="trust-rating">⭐⭐⭐⭐⭐</div>
+        </div>
+        <div class="trust-person">
+          <div class="trust-avatar">👨</div>
+          <div>
+            <div class="trust-name">Tu hermano</div>
+            <div class="trust-when">Hace 1 mes · Tubería</div>
+          </div>
+          <div class="trust-rating">⭐⭐⭐⭐⭐</div>
+        </div>
+      </div>
+
+      <div class="tech-row">
+        <div class="tech-icon">✅</div>
+        <div>
+          <div class="tech-name">Verificado por UberHome</div>
+          <div class="tech-meta">Antecedentes · Certificación · Seguro</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMING SOON -->
+<section class="coming-soon">
+  <div class="coming-soon-bg"></div>
+  <div class="coming-soon-content">
+    <div class="coming-badge">Próximamente</div>
+    <h2 class="coming-title">Coming<br><span>Soon.</span></h2>
+    <p class="coming-sub">La Red de Confianza estará disponible pronto en UberHome. Deja tu correo y sé de los primeros en activarla.</p>
+
+    <div class="email-form" id="emailForm">
+      <input type="email" class="email-input" id="emailInput" placeholder="tu@correo.com">
+      <button class="btn-primary" onclick="submitEmail()">Avisarme</button>
+    </div>
+    <div class="form-success" id="formSuccess">
+      ✓ Listo. Te avisamos cuando la Red de Confianza esté disponible.
+    </div>
+    <div class="form-note">Sin spam. Solo te avisamos cuando esté lista.</div>
+
+    <br>
+    <a href="index.html" class="back-link">← Volver a UberHome Servicios</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">UberHome</div>
+  <div class="footer-note">UberHome Servicios es un proyecto académico de investigación de producto. No está afiliado ni representa a Uber Technologies Inc.</div>
+</footer>
+
+<script>
+  // Track page visit
+  function trackFeaturePageVisit() {
+    const visits = parseInt(localStorage.getItem('uberhome_feature_page_visits') || '0') + 1;
+    localStorage.setItem('uberhome_feature_page_visits', visits);
+    try {
+      const data = JSON.parse(localStorage.getItem('uberhome_data') || '{}');
+      if (!data.feature_page_visits) data.feature_page_visits = [];
+      data.feature_page_visits.push({ ts: new Date().toISOString() });
+      localStorage.setItem('uberhome_data', JSON.stringify(data));
+    } catch(e) {}
+  }
+
+  // Handle email submission
+  function submitEmail() {
+    const email = document.getElementById('emailInput').value;
+    if (!email || !email.includes('@')) {
+      document.getElementById('emailInput').style.borderColor = '#ff4444';
+      return;
+    }
+
+    // Store email locally
+    try {
+      const data = JSON.parse(localStorage.getItem('uberhome_data') || '{}');
+      if (!data.emails) data.emails = [];
+      data.emails.push({ email, ts: new Date().toISOString() });
+      localStorage.setItem('uberhome_data', JSON.stringify(data));
+
+      const total = parseInt(localStorage.getItem('uberhome_email_count') || '0') + 1;
+      localStorage.setItem('uberhome_email_count', total);
+    } catch(e) {}
+
+    document.getElementById('emailForm').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  }
+
+  trackFeaturePageVisit();
+
+  // Stats accessible from console
+  window.showStats = function() {
+    console.log('=== UberHome Feature Page Stats ===');
+    console.log('Feature page visits:', localStorage.getItem('uberhome_feature_page_visits'));
+    console.log('Email signups:', localStorage.getItem('uberhome_email_count'));
+    console.log('Full data:', JSON.parse(localStorage.getItem('uberhome_data') || '{}'));
+  };
+</script>
+
+</body>
+</html>

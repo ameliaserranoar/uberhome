@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UberHome — Servicios del Hogar</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  :root {
+    --green: #06C167;
+    --green-dark: #059952;
+    --black: #000000;
+    --dark: #111111;
+    --gray: #1a1a1a;
+    --text-secondary: #888;
+    --text-muted: #555;
+    --white: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(0,0,0,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #1a1a1a;
+    padding: 0 5%;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .nav-wordmark {
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--white);
+    letter-spacing: -0.5px;
+  }
+
+  .nav-product {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--green);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border: 1.5px solid #06C16740;
+    border-radius: 20px;
+    background: #06C16710;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .nav-link {
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-link:hover { color: var(--white); }
+
+  .nav-btn {
+    background: var(--white);
+    color: var(--black);
+    font-size: 13px;
+    font-weight: 700;
+    padding: 9px 20px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .nav-btn:hover { background: #ddd; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 5% 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 70% 50%, #06C16712 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, #06C16708 0%, transparent 60%);
+  }
+
+  .hero-content { position: relative; z-index: 2; max-width: 700px; }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #06C16715;
+    border: 1px solid #06C16730;
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--green);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+
+  .hero-title {
+    font-size: clamp(44px, 7vw, 80px);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -2px;
+    margin-bottom: 24px;
+  }
+
+  .hero-title span { color: var(--green); }
+
+  .hero-subtitle {
+    font-size: 18px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 520px;
+    margin-bottom: 48px;
+    font-weight: 400;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--green);
+    color: var(--black);
+    font-size: 15px;
+    font-weight: 800;
+    padding: 16px 32px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.1s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--green-dark); transform: translateY(-1px); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--white);
+    font-size: 15px;
+    font-weight: 600;
+    padding: 16px 32px;
+    border-radius: 50px;
+    border: 1.5px solid #333;
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.2s;
+    display: inline-block;
+  }
+  .btn-secondary:hover { border-color: #555; }
+
+  .hero-stats {
+    display: flex;
+    gap: 40px;
+    margin-top: 64px;
+    padding-top: 40px;
+    border-top: 1px solid #1a1a1a;
+    flex-wrap: wrap;
+  }
+
+  .stat-item { }
+  .stat-num {
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--white);
+    letter-spacing: -1px;
+  }
+  .stat-label { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+
+  /* ── SERVICES GRID ── */
+  .section { padding: 80px 5%; }
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-bottom: 12px;
+  }
+  .section-sub {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 480px;
+    margin-bottom: 48px;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+
+  .service-card {
+    background: var(--dark);
+    border: 1px solid #1e1e1e;
+    border-radius: 16px;
+    padding: 24px 20px;
+    cursor: pointer;
+    transition: border-color 0.2s, transform 0.2s;
+    position: relative;
+    text-decoration: none;
+    display: block;
+  }
+  .service-card:hover { border-color: #333; transform: translateY(-2px); }
+
+  .service-icon { font-size: 28px; margin-bottom: 12px; }
+  .service-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+  .service-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+  /* NEW BADGE */
+  .new-badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: var(--green);
+    color: var(--black);
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 20px;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+
+  /* FEATURED CARD */
+  .service-card-featured {
+    background: linear-gradient(135deg, #06C16712 0%, #0a0a0a 60%);
+    border-color: #06C16730;
+  }
+  .service-card-featured:hover { border-color: var(--green); }
+  .service-card-featured .service-name { color: var(--white); }
+
+  /* ── FEATURE HIGHLIGHT ── */
+  .feature-section {
+    padding: 80px 5%;
+    background: var(--dark);
+    border-top: 1px solid #1a1a1a;
+    border-bottom: 1px solid #1a1a1a;
+  }
+
+  .feature-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .feature-phone {
+    background: #0a0a0a;
+    border: 1.5px solid #222;
+    border-radius: 32px;
+    padding: 20px 16px;
+    max-width: 280px;
+    margin: 0 auto;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+  }
+
+  .phone-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #1a1a1a;
+    margin-bottom: 14px;
+  }
+  .phone-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: var(--green);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .phone-title { font-size: 14px; font-weight: 700; }
+  .phone-sub { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+
+  .phone-row {
+    background: #111;
+    border: 1px solid #1e1e1e;
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 8px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    text-decoration: none;
+    position: relative;
+  }
+  .phone-row:hover { border-color: #06C16750; }
+  .phone-row-icon { font-size: 20px; flex-shrink: 0; }
+  .phone-row-title { font-size: 12px; font-weight: 700; color: var(--white); margin-bottom: 2px; }
+  .phone-row-desc { font-size: 10px; color: var(--text-muted); line-height: 1.4; }
+  .phone-row-badge {
+    position: absolute;
+    top: 10px; right: 10px;
+    background: var(--green);
+    color: var(--black);
+    font-size: 8px;
+    font-weight: 900;
+    padding: 2px 7px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    animation: pulse 2s infinite;
+  }
+
+  .feature-copy { }
+  .feature-copy .section-label { margin-bottom: 12px; }
+  .feature-copy .section-title { margin-bottom: 16px; }
+  .feature-copy .section-sub { margin-bottom: 32px; }
+
+  .feature-points { display: flex; flex-direction: column; gap: 16px; }
+  .feature-point { display: flex; gap: 14px; align-items: flex-start; }
+  .fp-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: #06C16715;
+    border: 1px solid #06C16730;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .fp-title { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 3px; }
+  .fp-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+  .feature-cta {
+    margin-top: 36px;
+  }
+
+  /* ── HOW IT WORKS ── */
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 16px;
+  }
+
+  .step-card {
+    background: var(--dark);
+    border: 1px solid #1e1e1e;
+    border-radius: 16px;
+    padding: 28px 24px;
+  }
+  .step-num {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--green);
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+  }
+  .step-icon { font-size: 24px; margin-bottom: 12px; }
+  .step-title { font-size: 17px; font-weight: 800; margin-bottom: 8px; }
+  .step-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+
+  /* ── CTA SECTION ── */
+  .cta-section {
+    padding: 100px 5%;
+    text-align: center;
+    background: var(--dark);
+    border-top: 1px solid #1a1a1a;
+  }
+  .cta-section .section-label { justify-content: center; display: flex; }
+  .cta-section .section-title { text-align: center; margin: 12px auto 16px; max-width: 600px; }
+  .cta-section .section-sub { text-align: center; margin: 0 auto 40px; }
+  .cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--black);
+    border-top: 1px solid #1a1a1a;
+    padding: 40px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .footer-logo { font-size: 18px; font-weight: 900; color: var(--white); }
+  .footer-note { font-size: 12px; color: var(--text-muted); line-height: 1.6; max-width: 400px; }
+  .footer-links { display: flex; gap: 20px; }
+  .footer-link { font-size: 12px; color: var(--text-muted); text-decoration: none; }
+  .footer-link:hover { color: var(--white); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .feature-inner { grid-template-columns: 1fr; }
+    .feature-phone { order: -1; }
+    .steps-grid { grid-template-columns: 1fr; }
+    .nav-right .nav-link { display: none; }
+    .hero-stats { gap: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">
+    <span class="nav-wordmark">UberHome</span>
+    <span class="nav-product">Servicios</span>
+  </a>
+  <div class="nav-right">
+    <a href="#servicios" class="nav-link">Servicios</a>
+    <a href="#como-funciona" class="nav-link">Cómo funciona</a>
+    <a href="#servicios" class="btn-primary" onclick="trackCTA('nav_cta')">Solicitar servicio</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      🔧 UberHome Servicios del Hogar
+    </div>
+    <h1 class="hero-title">
+      Tu hogar<br>en buenas<br><span>manos.</span>
+    </h1>
+    <p class="hero-subtitle">
+      Técnicos verificados para reparaciones, instalaciones y mantenimiento en tu hogar. Rápido, confiable y disponible ahora.
+    </p>
+    <div class="hero-actions">
+      <a href="#servicios" class="btn-primary" onclick="trackCTA('hero_cta_primary')">Ver servicios disponibles</a>
+      <a href="#como-funciona" class="btn-secondary">¿Cómo funciona?</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">+500</div>
+        <div class="stat-label">Técnicos verificados</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">4.8★</div>
+        <div class="stat-label">Calificación promedio</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">30 min</div>
+        <div class="stat-label">Tiempo de respuesta</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">Bogotá</div>
+        <div class="stat-label">Disponible en</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section" id="servicios">
+  <div class="section-label">Servicios disponibles</div>
+  <h2 class="section-title">¿Qué necesitas<br>reparar hoy?</h2>
+  <p class="section-sub">Selecciona el servicio y conectamos con el técnico disponible más cercano.</p>
+
+  <div class="services-grid">
+    <a href="#" class="service-card" onclick="trackCTA('service_plomeria'); return false;">
+      <div class="service-icon">🚿</div>
+      <div class="service-name">Plomería</div>
+      <div class="service-desc">Fugas, tuberías, llaves, sanitarios y más.</div>
+    </a>
+    <a href="#" class="service-card" onclick="trackCTA('service_electrica'); return false;">
+      <div class="service-icon">⚡</div>
+      <div class="service-name">Electricidad</div>
+      <div class="service-desc">Instalaciones, tomacorrientes, cortos y revisiones.</div>
+    </a>
+    <a href="#" class="service-card" onclick="trackCTA('service_calentador'); return false;">
+      <div class="service-icon">🔥</div>
+      <div class="service-name">Calentadores</div>
+      <div class="service-desc">Mantenimiento, instalación y reparación.</div>
+    </a>
+    <a href="#" class="service-card" onclick="trackCTA('service_cerrajeria'); return false;">
+      <div class="service-icon">🔑</div>
+      <div class="service-name">Cerrajería</div>
+      <div class="service-desc">Apertura de puertas, cambio de chapas y seguros.</div>
+    </a>
+    <a href="#" class="service-card" onclick="trackCTA('service_pintura'); return false;">
+      <div class="service-icon">🎨</div>
+      <div class="service-name">Pintura</div>
+      <div class="service-desc">Interiores, exteriores y acabados.</div>
+    </a>
+
+    <!-- FEATURED: RED DE CONFIANZA -->
+    <a href="feature.html" class="service-card service-card-featured" id="red-confianza-btn" onclick="trackNewFeature()">
+      <div class="new-badge">Nuevo</div>
+      <div class="service-icon">👥</div>
+      <div class="service-name">Red de Confianza</div>
+      <div class="service-desc">Ve qué técnicos usaron personas de tu red y cómo les fue.</div>
+    </a>
+  </div>
+</section>
+
+<!-- FEATURE HIGHLIGHT -->
+<section class="feature-section" id="red-confianza">
+  <div class="feature-inner">
+    <div class="feature-phone">
+      <div class="phone-header">
+        <div class="phone-icon">🏠</div>
+        <div>
+          <div class="phone-title">UberHome Servicios</div>
+          <div class="phone-sub">Bogotá · Disponible ahora</div>
+        </div>
+      </div>
+
+      <a href="feature.html" class="phone-row" onclick="trackNewFeature()">
+        <div class="phone-row-badge">Nuevo</div>
+        <div class="phone-row-icon">👥</div>
+        <div>
+          <div class="phone-row-title">Red de Confianza</div>
+          <div class="phone-row-desc">3 personas en tu red usaron a este técnico</div>
+        </div>
+      </a>
+
+      <a href="#" class="phone-row" onclick="return false;">
+        <div class="phone-row-icon">🔧</div>
+        <div>
+          <div class="phone-row-title">Carlos M. · Plomería</div>
+          <div class="phone-row-desc">⭐ 4.9 · 127 servicios · 15 min</div>
+        </div>
+      </a>
+
+      <a href="#" class="phone-row" onclick="return false;">
+        <div class="phone-row-icon">⚡</div>
+        <div>
+          <div class="phone-row-title">Jhon A. · Electricista</div>
+          <div class="phone-row-desc">⭐ 4.8 · 89 servicios · 22 min</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="feature-copy">
+      <div class="section-label">Nueva función</div>
+      <h2 class="section-title">La confianza viaja a través de las personas.</h2>
+      <p class="section-sub">Ahora puedes ver qué técnicos usaron personas de tu red y cómo les fue — antes de contratar a alguien desconocido.</p>
+
+      <div class="feature-points">
+        <div class="feature-point">
+          <div class="fp-icon">👥</div>
+          <div>
+            <div class="fp-title">Elige a quién sigues</div>
+            <div class="fp-desc">Tú controlas tu red. Solo ves recomendaciones de personas que decidiste incluir.</div>
+          </div>
+        </div>
+        <div class="feature-point">
+          <div class="fp-icon">✅</div>
+          <div>
+            <div class="fp-title">Ve quién ya lo contrató</div>
+            <div class="fp-desc">Al buscar un técnico, aparece si alguien en tu red ya lo usó y qué calificación le dio.</div>
+          </div>
+        </div>
+        <div class="feature-point">
+          <div class="fp-icon">⚡</div>
+          <div>
+            <div class="fp-title">Perfecto para urgencias</div>
+            <div class="fp-desc">En una emergencia, la señal de tu red ya tomó la decisión por ti.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-cta">
+        <a href="feature.html" class="btn-primary" onclick="trackNewFeature()">Conocer la Red de Confianza →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="como-funciona">
+  <div class="section-label">Proceso</div>
+  <h2 class="section-title">Así de fácil.</h2>
+  <p class="section-sub">Desde que notas el problema hasta que queda resuelto.</p>
+
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-num">PASO 01</div>
+      <div class="step-icon">📍</div>
+      <div class="step-title">Elige el servicio</div>
+      <div class="step-desc">Selecciona qué necesitas y confirmamos tu ubicación en Bogotá.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">PASO 02</div>
+      <div class="step-icon">👤</div>
+      <div class="step-title">Conectamos con el técnico</div>
+      <div class="step-desc">Asignamos el técnico verificado más cercano y disponible. Puedes ver su perfil antes de confirmar.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">PASO 03</div>
+      <div class="step-icon">✅</div>
+      <div class="step-title">Trabajo listo</div>
+      <div class="step-desc">El técnico llega, resuelve el problema y tú calificas el servicio. Sin efectivo, sin complicaciones.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="section-label">Empieza hoy</div>
+  <h2 class="section-title">¿Qué problema tienes en casa hoy?</h2>
+  <p class="section-sub">Técnicos verificados disponibles en Bogotá. Respuesta en menos de 30 minutos.</p>
+  <div class="cta-actions">
+    <a href="#servicios" class="btn-primary" onclick="trackCTA('bottom_cta')">Solicitar servicio ahora</a>
+    <a href="feature.html" class="btn-secondary" onclick="trackNewFeature()">Ver nueva función →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">UberHome</div>
+  <div class="footer-note">
+    UberHome Servicios es un proyecto académico de investigación de producto. No está afiliado ni representa a Uber Technologies Inc.
+  </div>
+  <div class="footer-links">
+    <a href="#" class="footer-link">Privacidad</a>
+    <a href="#" class="footer-link">Términos</a>
+    <a href="#" class="footer-link">Contacto</a>
+  </div>
+</footer>
+
+<!-- TRACKING SCRIPT -->
+<script>
+  // Simple tracking using localStorage to count visits and clicks
+  // In production this would use an analytics service
+
+  // Count page visits
+  function trackPageVisit() {
+    const visits = parseInt(localStorage.getItem('uberhome_visits') || '0') + 1;
+    localStorage.setItem('uberhome_visits', visits);
+    localStorage.setItem('uberhome_last_visit', new Date().toISOString());
+
+    // Also track via a lightweight pixel/beacon if available
+    try {
+      const data = JSON.parse(localStorage.getItem('uberhome_data') || '{}');
+      if (!data.visits) data.visits = [];
+      data.visits.push({ ts: new Date().toISOString(), page: 'home' });
+      localStorage.setItem('uberhome_data', JSON.stringify(data));
+    } catch(e) {}
+  }
+
+  // Track new feature button clicks
+  function trackNewFeature() {
+    const clicks = parseInt(localStorage.getItem('uberhome_feature_clicks') || '0') + 1;
+    localStorage.setItem('uberhome_feature_clicks', clicks);
+
+    try {
+      const data = JSON.parse(localStorage.getItem('uberhome_data') || '{}');
+      if (!data.feature_clicks) data.feature_clicks = [];
+      data.feature_clicks.push({ ts: new Date().toISOString(), source: event?.target?.id || 'unknown' });
+      localStorage.setItem('uberhome_data', JSON.stringify(data));
+    } catch(e) {}
+  }
+
+  // Track generic CTAs
+  function trackCTA(name) {
+    try {
+      const data = JSON.parse(localStorage.getItem('uberhome_data') || '{}');
+      if (!data.cta_clicks) data.cta_clicks = [];
+      data.cta_clicks.push({ ts: new Date().toISOString(), cta: name });
+      localStorage.setItem('uberhome_data', JSON.stringify(data));
+    } catch(e) {}
+  }
+
+  // Run on load
+  trackPageVisit();
+
+  // Expose stats for easy reading (open browser console and type: showStats())
+  window.showStats = function() {
+    console.log('=== UberHome Tracking Stats ===');
+    console.log('Total visits:', localStorage.getItem('uberhome_visits'));
+    console.log('Feature clicks:', localStorage.getItem('uberhome_feature_clicks'));
+    console.log('Full data:', JSON.parse(localStorage.getItem('uberhome_data') || '{}'));
+  };
+</script>
+
+</body>
+</html>
