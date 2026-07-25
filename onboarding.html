@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bienvenido — UberHome</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+
+  :root {
+    --green: #06C167;
+    --green-dark: #059952;
+    --black: #000000;
+    --dark: #111111;
+    --gray: #1a1a1a;
+    --text-secondary: #888;
+    --text-muted: #555;
+    --white: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 24px 12px;
+  }
+
+  /* APP SHELL */
+  .app {
+    width: 100%;
+    max-width: 390px;
+    min-height: calc(100vh - 48px);
+    background: var(--black);
+    border: 1px solid #1a1a1a;
+    border-radius: 32px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+  }
+
+  .app-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 20px 14px;
+  }
+  .app-logo { display: flex; align-items: center; gap: 8px; }
+  .app-wordmark { font-size: 17px; font-weight: 900; letter-spacing: -0.4px; }
+  .app-product {
+    font-size: 10px; font-weight: 700; color: var(--green);
+    letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 2px 8px; border: 1px solid #06C16740;
+    border-radius: 20px; background: #06C16710;
+  }
+  .app-progress { display: flex; gap: 5px; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: #2a2a2a; }
+  .dot.active { background: var(--green); }
+
+  .app-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px 28px 40px;
+  }
+
+  .onboard-visual {
+    width: 100%;
+    max-width: 220px;
+    aspect-ratio: 1;
+    margin: 0 auto 36px;
+    border-radius: 28px;
+    background: radial-gradient(ellipse 70% 60% at 50% 40%, #06C16720 0%, transparent 70%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 72px;
+    border: 1px solid #1a1a1a;
+  }
+
+  .onboard-title {
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    line-height: 1.15;
+    text-align: center;
+    margin-bottom: 14px;
+  }
+  .onboard-title span { color: var(--green); }
+
+  .onboard-desc {
+    font-size: 14.5px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    text-align: center;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  .app-footer {
+    padding: 0 24px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .btn-primary {
+    background: var(--green);
+    color: var(--black);
+    font-size: 15px;
+    font-weight: 800;
+    padding: 16px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    display: block;
+    width: 100%;
+    transition: background 0.2s;
+    font-family: 'Inter', sans-serif;
+  }
+  .btn-primary:hover { background: var(--green-dark); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    text-decoration: none;
+  }
+  .btn-ghost:hover { color: var(--white); }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="app-bar">
+    <div class="app-logo">
+      <span class="app-wordmark">UberHome</span>
+      <span class="app-product">Servicios</span>
+    </div>
+    <div class="app-progress">
+      <span class="dot active" id="dot1"></span>
+      <span class="dot" id="dot2"></span>
+      <span class="dot" id="dot3"></span>
+    </div>
+  </div>
+
+  <div class="app-body" id="slideContainer">
+    <div class="onboard-visual" id="slideIcon">🏠</div>
+    <h1 class="onboard-title" id="slideTitle">Bienvenido a <span>UberHome</span></h1>
+    <p class="onboard-desc" id="slideDesc">Conectamos tu hogar con técnicos verificados para plomería, electricidad, cerrajería y más — rápido y confiable.</p>
+  </div>
+
+  <div class="app-footer">
+    <button class="btn-primary" id="nextBtn" onclick="nextSlide()">Siguiente</button>
+    <a href="index.html" class="btn-ghost">Saltar</a>
+  </div>
+</div>
+
+<script>
+  const slides = [
+    {
+      icon: '🏠',
+      title: 'Bienvenido a <span>UberHome</span>',
+      desc: 'Conectamos tu hogar con técnicos verificados para plomería, electricidad, cerrajería y más — rápido y confiable.'
+    },
+    {
+      icon: '👥',
+      title: 'Conoce la <span>Red de Confianza</span>',
+      desc: 'Antes de contratar a un desconocido, ve qué técnicos ya usaron las personas de tu red — y cómo les fue.'
+    },
+    {
+      icon: '✅',
+      title: 'La misma confianza <span>de siempre</span>',
+      desc: 'Como preguntarle a un amigo "¿conoces a alguien de confianza?" — pero disponible al instante, dentro de la app.'
+    }
+  ];
+
+  let current = 0;
+
+  function renderSlide() {
+    const s = slides[current];
+    document.getElementById('slideIcon').textContent = s.icon;
+    document.getElementById('slideTitle').innerHTML = s.title;
+    document.getElementById('slideDesc').textContent = s.desc;
+
+    for (let i = 1; i <= 3; i++) {
+      document.getElementById('dot' + i).classList.toggle('active', i === current + 1);
+    }
+
+    document.getElementById('nextBtn').textContent = current === slides.length - 1 ? 'Empezar' : 'Siguiente';
+  }
+
+  function nextSlide() {
+    if (current < slides.length - 1) {
+      current++;
+      renderSlide();
+    } else {
+      window.location.href = 'setup-red.html';
+    }
+  }
+
+  // Tracking
+  function trackFlow(screen) {
+    try {
+      const flow = JSON.parse(localStorage.getItem('uberhome_mvp_flow') || '[]');
+      flow.push({ screen, ts: new Date().toISOString() });
+      localStorage.setItem('uberhome_mvp_flow', JSON.stringify(flow));
+    } catch (e) {}
+  }
+  trackFlow('onboarding');
+</script>
+
+</body>
+</html>

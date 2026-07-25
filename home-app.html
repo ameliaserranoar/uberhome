@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UberHome — Inicio</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+
+  :root {
+    --green: #06C167;
+    --green-dark: #059952;
+    --black: #000000;
+    --dark: #111111;
+    --gray: #1a1a1a;
+    --text-secondary: #888;
+    --text-muted: #555;
+    --white: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 24px 12px;
+  }
+
+  .app {
+    width: 100%;
+    max-width: 390px;
+    min-height: calc(100vh - 48px);
+    background: var(--black);
+    border: 1px solid #1a1a1a;
+    border-radius: 32px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+  }
+
+  .app-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 20px 14px;
+    border-bottom: 1px solid #1a1a1a;
+  }
+  .app-logo { display: flex; align-items: center; gap: 8px; }
+  .app-wordmark { font-size: 17px; font-weight: 900; letter-spacing: -0.4px; }
+  .app-product {
+    font-size: 10px; font-weight: 700; color: var(--green);
+    letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 2px 8px; border: 1px solid #06C16740;
+    border-radius: 20px; background: #06C16710;
+  }
+  .app-location { font-size: 11px; color: var(--text-muted); }
+
+  .app-body {
+    flex: 1;
+    padding: 20px 20px 20px;
+    overflow-y: auto;
+  }
+
+  .greeting { font-size: 20px; font-weight: 800; margin-bottom: 4px; letter-spacing: -0.4px; }
+  .greeting-sub { font-size: 13px; color: var(--text-secondary); margin-bottom: 22px; }
+
+  .section-label {
+    font-size: 10.5px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px;
+  }
+
+  .service-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .service-card {
+    background: var(--dark);
+    border: 1px solid #1e1e1e;
+    border-radius: 16px;
+    padding: 14px;
+    display: block;
+    text-decoration: none;
+    color: var(--white);
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+  .service-card:hover { border-color: #333; }
+  .service-card.has-trust { border-color: #06C16750; background: linear-gradient(135deg, #06C16710 0%, #0a0a0a 65%); }
+
+  .service-top { display: flex; align-items: center; gap: 12px; }
+  .service-icon {
+    width: 42px; height: 42px;
+    border-radius: 12px;
+    background: #1a1a1a;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .service-card.has-trust .service-icon { background: #06C16720; }
+
+  .service-info { flex: 1; min-width: 0; }
+  .service-name { font-size: 14.5px; font-weight: 700; margin-bottom: 2px; }
+  .service-desc { font-size: 11.5px; color: var(--text-muted); }
+  .service-chevron { color: var(--text-muted); font-size: 16px; }
+
+  .trust-signal {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #06C16730;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .trust-signal-avatar {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: #1a1a1a;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    flex-shrink: 0;
+    border: 1px solid #2a2a2a;
+  }
+  .trust-signal-text { font-size: 11.5px; color: var(--white); line-height: 1.4; }
+  .trust-signal-text b { color: var(--green); }
+  .trust-signal-stars { font-size: 10px; margin-left: auto; flex-shrink: 0; }
+
+  .app-footer-nav {
+    padding: 12px 24px 24px;
+    text-align: center;
+  }
+  .footer-note-mini { font-size: 10.5px; color: var(--text-muted); }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="app-bar">
+    <div class="app-logo">
+      <span class="app-wordmark">UberHome</span>
+      <span class="app-product">Servicios</span>
+    </div>
+    <div class="app-location">📍 Bogotá</div>
+  </div>
+
+  <div class="app-body">
+    <div class="greeting">¿Qué necesitas hoy?</div>
+    <div class="greeting-sub">Técnicos verificados, disponibles ahora.</div>
+
+    <div class="section-label">Servicios disponibles</div>
+    <div class="service-list">
+      <a href="perfil-tecnico.html" class="service-card has-trust" onclick="trackServiceClick('plomeria')">
+        <div class="service-top">
+          <div class="service-icon">🚿</div>
+          <div class="service-info">
+            <div class="service-name">Plomería</div>
+            <div class="service-desc">Fugas, tuberías, llaves y sanitarios</div>
+          </div>
+          <div class="service-chevron">›</div>
+        </div>
+        <div class="trust-signal">
+          <div class="trust-signal-avatar">👩</div>
+          <div class="trust-signal-text"><b>María López</b> usó a este técnico hace 2 semanas</div>
+          <div class="trust-signal-stars">⭐⭐⭐⭐⭐</div>
+        </div>
+      </a>
+
+      <a href="#" class="service-card" onclick="return false;">
+        <div class="service-top">
+          <div class="service-icon">⚡</div>
+          <div class="service-info">
+            <div class="service-name">Electricidad</div>
+            <div class="service-desc">Instalaciones, cortos y revisiones</div>
+          </div>
+          <div class="service-chevron">›</div>
+        </div>
+      </a>
+
+      <a href="#" class="service-card" onclick="return false;">
+        <div class="service-top">
+          <div class="service-icon">🔥</div>
+          <div class="service-info">
+            <div class="service-name">Calentadores</div>
+            <div class="service-desc">Mantenimiento e instalación</div>
+          </div>
+          <div class="service-chevron">›</div>
+        </div>
+      </a>
+
+      <a href="#" class="service-card" onclick="return false;">
+        <div class="service-top">
+          <div class="service-icon">🔑</div>
+          <div class="service-info">
+            <div class="service-name">Cerrajería</div>
+            <div class="service-desc">Apertura y cambio de chapas</div>
+          </div>
+          <div class="service-chevron">›</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="app-footer-nav">
+    <div class="footer-note-mini">Selecciona un servicio para ver técnicos disponibles</div>
+  </div>
+</div>
+
+<script>
+  function trackServiceClick(service) {
+    try {
+      const data = JSON.parse(localStorage.getItem('uberhome_data') || '{}');
+      if (!data.service_clicks) data.service_clicks = [];
+      data.service_clicks.push({ ts: new Date().toISOString(), service });
+      localStorage.setItem('uberhome_data', JSON.stringify(data));
+    } catch (e) {}
+  }
+
+  // Tracking
+  function trackFlow(screen) {
+    try {
+      const flow = JSON.parse(localStorage.getItem('uberhome_mvp_flow') || '[]');
+      flow.push({ screen, ts: new Date().toISOString() });
+      localStorage.setItem('uberhome_mvp_flow', JSON.stringify(flow));
+    } catch (e) {}
+  }
+  trackFlow('home-app');
+</script>
+
+</body>
+</html>

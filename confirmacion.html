@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Técnico en camino — UberHome</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+
+  :root {
+    --green: #06C167;
+    --green-dark: #059952;
+    --black: #000000;
+    --dark: #111111;
+    --gray: #1a1a1a;
+    --text-secondary: #888;
+    --text-muted: #555;
+    --white: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 24px 12px;
+  }
+
+  .app {
+    width: 100%;
+    max-width: 390px;
+    min-height: calc(100vh - 48px);
+    background: var(--black);
+    border: 1px solid #1a1a1a;
+    border-radius: 32px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+  }
+
+  .app-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 28px;
+    text-align: center;
+  }
+
+  .success-badge {
+    width: 84px; height: 84px;
+    border-radius: 50%;
+    background: #06C16718;
+    border: 1.5px solid #06C16750;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 40px;
+    margin-bottom: 24px;
+    animation: pop-in 0.4s ease;
+  }
+  @keyframes pop-in {
+    from { opacity: 0; transform: scale(0.7); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .confirm-title {
+    font-size: 26px;
+    font-weight: 900;
+    letter-spacing: -0.6px;
+    margin-bottom: 10px;
+  }
+  .confirm-sub {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 32px;
+    max-width: 280px;
+  }
+
+  .tracking-card {
+    width: 100%;
+    background: var(--dark);
+    border: 1px solid #1e1e1e;
+    border-radius: 18px;
+    padding: 18px;
+    text-align: left;
+    margin-bottom: 16px;
+  }
+  .tracking-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid #1a1a1a;
+  }
+  .tracking-row:last-child { border-bottom: none; }
+  .tracking-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: #1a1a1a;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px;
+    flex-shrink: 0;
+  }
+  .tracking-label { font-size: 10.5px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
+  .tracking-value { font-size: 14px; font-weight: 700; }
+
+  .track-number {
+    width: 100%;
+    background: #06C16712;
+    border: 1px solid #06C16740;
+    border-radius: 14px;
+    padding: 14px;
+    margin-bottom: 32px;
+  }
+  .track-number-label { font-size: 10.5px; color: var(--green); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 4px; }
+  .track-number-value { font-size: 17px; font-weight: 900; letter-spacing: 1px; }
+
+  .btn-primary {
+    background: var(--green);
+    color: var(--black);
+    font-size: 15px;
+    font-weight: 800;
+    padding: 16px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    display: block;
+    width: 100%;
+    transition: background 0.2s;
+    font-family: 'Inter', sans-serif;
+  }
+  .btn-primary:hover { background: var(--green-dark); }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="app-body">
+    <div class="success-badge">🔧</div>
+    <h1 class="confirm-title">¡Técnico en camino!</h1>
+    <p class="confirm-sub">Carlos M. fue notificado y ya se dirige a tu ubicación.</p>
+
+    <div class="tracking-card">
+      <div class="tracking-row">
+        <div class="tracking-icon">🔧</div>
+        <div>
+          <div class="tracking-label">Técnico</div>
+          <div class="tracking-value">Carlos M. · Plomería</div>
+        </div>
+      </div>
+      <div class="tracking-row">
+        <div class="tracking-icon">⏱️</div>
+        <div>
+          <div class="tracking-label">Tiempo estimado</div>
+          <div class="tracking-value">15 minutos</div>
+        </div>
+      </div>
+      <div class="tracking-row">
+        <div class="tracking-icon">👥</div>
+        <div>
+          <div class="tracking-label">Recomendado por</div>
+          <div class="tracking-value">María López, tu red</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="track-number">
+      <div class="track-number-label">Número de seguimiento</div>
+      <div class="track-number-value" id="trackingNumber">UH-000000</div>
+    </div>
+
+    <a href="index.html" class="btn-primary">Volver al inicio</a>
+  </div>
+</div>
+
+<script>
+  document.getElementById('trackingNumber').textContent = 'UH-' + Math.floor(100000 + Math.random() * 900000);
+
+  // Tracking
+  function trackFlow(screen) {
+    try {
+      const flow = JSON.parse(localStorage.getItem('uberhome_mvp_flow') || '[]');
+      flow.push({ screen, ts: new Date().toISOString() });
+      localStorage.setItem('uberhome_mvp_flow', JSON.stringify(flow));
+    } catch (e) {}
+  }
+  trackFlow('confirmacion');
+</script>
+
+</body>
+</html>
