@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contratar un servicio — UberHome</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+  :root {
+    --green: #06C167;
+    --green-dark: #059952;
+    --black: #000000;
+    --dark: #111111;
+    --gray: #1a1a1a;
+    --text-secondary: #888;
+    --text-muted: #555;
+    --white: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(0,0,0,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #1a1a1a;
+    padding: 0 5%;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-wordmark { font-size: 22px; font-weight: 900; color: var(--white); letter-spacing: -0.5px; }
+  .nav-product {
+    font-size: 13px; font-weight: 700; color: var(--green);
+    letter-spacing: 2px; text-transform: uppercase;
+    padding: 3px 10px; border: 1.5px solid #06C16740;
+    border-radius: 20px; background: #06C16710;
+  }
+  .nav-back {
+    color: var(--text-secondary); font-size: 14px; font-weight: 500;
+    text-decoration: none; transition: color 0.2s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .nav-back:hover { color: var(--white); }
+
+  main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 120px 5% 100px;
+  }
+
+  .page-header { margin-bottom: 40px; }
+  .section-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--green); margin-bottom: 14px;
+  }
+  .page-title {
+    font-size: clamp(30px, 4vw, 46px); font-weight: 900;
+    line-height: 1.1; letter-spacing: -1px; margin-bottom: 12px;
+  }
+  .page-sub { font-size: 16px; color: var(--text-secondary); line-height: 1.7; max-width: 560px; }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+  }
+
+  .service-card {
+    background: var(--dark);
+    border: 1px solid #1e1e1e;
+    border-radius: 16px;
+    padding: 28px 22px;
+    cursor: pointer;
+    transition: border-color 0.2s, transform 0.2s;
+    text-decoration: none;
+    display: block;
+    color: var(--white);
+  }
+  .service-card:hover { border-color: #333; transform: translateY(-2px); }
+
+  .service-icon { font-size: 30px; margin-bottom: 14px; }
+  .service-name { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .service-desc { font-size: 12.5px; color: var(--text-muted); line-height: 1.5; }
+
+  .page-actions {
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid #1a1a1a;
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--white);
+    font-size: 14px;
+    font-weight: 600;
+    padding: 14px 24px;
+    border-radius: 50px;
+    border: 1.5px solid #333;
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.2s;
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
+  }
+  .btn-secondary:hover { border-color: #555; }
+
+  footer {
+    background: var(--black);
+    border-top: 1px solid #1a1a1a;
+    padding: 32px 5%;
+    text-align: center;
+  }
+  .footer-note { font-size: 11px; color: var(--text-muted); max-width: 500px; margin: 0 auto; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <span class="nav-wordmark">UberHome</span>
+    <span class="nav-product">Servicios</span>
+  </a>
+  <a href="feature.html" class="nav-back">← Volver</a>
+</nav>
+
+<main>
+  <div class="page-header">
+    <div class="section-label">Contratar</div>
+    <h1 class="page-title">¿Qué necesitas reparar hoy?</h1>
+    <p class="page-sub">Selecciona el servicio y te mostramos los técnicos disponibles cerca de ti.</p>
+  </div>
+
+  <div class="services-grid">
+    <a href="electricista.html" class="service-card" onclick="trackServiceChoice('Electricidad')">
+      <div class="service-icon">⚡</div>
+      <div class="service-name">Electricidad</div>
+      <div class="service-desc">Instalaciones, tomacorrientes, cortos y revisiones.</div>
+    </a>
+    <a href="tecnicos-generico.html?servicio=Plomer%C3%ADa&icono=%F0%9F%9A%BF" class="service-card" onclick="trackServiceChoice('Plomería')">
+      <div class="service-icon">🚿</div>
+      <div class="service-name">Plomería</div>
+      <div class="service-desc">Fugas, tuberías, llaves, sanitarios y más.</div>
+    </a>
+    <a href="tecnicos-generico.html?servicio=Cerrajer%C3%ADa&icono=%F0%9F%94%91" class="service-card" onclick="trackServiceChoice('Cerrajería')">
+      <div class="service-icon">🔑</div>
+      <div class="service-name">Cerrajería</div>
+      <div class="service-desc">Apertura de puertas, cambio de chapas y seguros.</div>
+    </a>
+    <a href="tecnicos-generico.html?servicio=Calentadores&icono=%F0%9F%94%A5" class="service-card" onclick="trackServiceChoice('Calentadores')">
+      <div class="service-icon">🔥</div>
+      <div class="service-name">Calentadores</div>
+      <div class="service-desc">Mantenimiento, instalación y reparación.</div>
+    </a>
+    <a href="tecnicos-generico.html?servicio=Pintura&icono=%F0%9F%8E%A8" class="service-card" onclick="trackServiceChoice('Pintura')">
+      <div class="service-icon">🎨</div>
+      <div class="service-name">Pintura</div>
+      <div class="service-desc">Interiores, exteriores y acabados.</div>
+    </a>
+  </div>
+
+  <div class="page-actions">
+    <a href="crear-red.html" class="btn-secondary">← Crear mi Red de Confianza</a>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-note">UberHome Servicios es un proyecto académico de investigación de producto. No está afiliado ni representa a Uber Technologies Inc.</div>
+</footer>
+
+<script>
+  function trackServiceChoice(service) {
+    try {
+      const data = JSON.parse(localStorage.getItem('uberhome_data') || '{}');
+      if (!data.service_clicks) data.service_clicks = [];
+      data.service_clicks.push({ ts: new Date().toISOString(), service });
+      localStorage.setItem('uberhome_data', JSON.stringify(data));
+    } catch (e) {}
+  }
+
+  // Tracking
+  function trackFlow(screen) {
+    try {
+      const flow = JSON.parse(localStorage.getItem('uberhome_mvp_flow') || '[]');
+      flow.push({ screen, ts: new Date().toISOString() });
+      localStorage.setItem('uberhome_mvp_flow', JSON.stringify(flow));
+    } catch (e) {}
+  }
+  trackFlow('contratar');
+</script>
+
+</body>
+</html>

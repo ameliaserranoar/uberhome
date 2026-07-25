@@ -148,21 +148,21 @@
   <div class="app-body">
     <div class="success-badge">🔧</div>
     <h1 class="confirm-title">¡Técnico en camino!</h1>
-    <p class="confirm-sub">Carlos M. fue notificado y ya se dirige a tu ubicación.</p>
+    <p class="confirm-sub" id="confirmSub">Carlos M. fue notificado y ya se dirige a tu ubicación.</p>
 
     <div class="tracking-card">
       <div class="tracking-row">
         <div class="tracking-icon">🔧</div>
         <div>
           <div class="tracking-label">Técnico</div>
-          <div class="tracking-value">Carlos M. · Plomería</div>
+          <div class="tracking-value" id="tecnicoValue">Carlos M. · Plomería</div>
         </div>
       </div>
       <div class="tracking-row">
         <div class="tracking-icon">⏱️</div>
         <div>
           <div class="tracking-label">Tiempo estimado</div>
-          <div class="tracking-value">15 minutos</div>
+          <div class="tracking-value" id="tiempoValue">15 minutos</div>
         </div>
       </div>
       <div class="tracking-row">
@@ -185,6 +185,15 @@
 
 <script>
   document.getElementById('trackingNumber').textContent = 'UH-' + Math.floor(100000 + Math.random() * 900000);
+
+  const params = new URLSearchParams(window.location.search);
+  const tecnico = params.get('tecnico') || 'Carlos M.';
+  const especialidad = params.get('especialidad') || 'Plomería';
+  const tiempo = params.get('tiempo') || '15 min';
+
+  document.getElementById('confirmSub').textContent = tecnico + ' fue notificado y ya se dirige a tu ubicación.';
+  document.getElementById('tecnicoValue').textContent = tecnico + ' · ' + especialidad;
+  document.getElementById('tiempoValue').textContent = tiempo.includes('min') ? tiempo : tiempo + ' minutos';
 
   // Tracking
   function trackFlow(screen) {

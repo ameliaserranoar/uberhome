@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perfil del técnico — UberHome</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+  :root {
+    --green: #06C167;
+    --green-dark: #059952;
+    --black: #000000;
+    --dark: #111111;
+    --gray: #1a1a1a;
+    --text-secondary: #888;
+    --text-muted: #555;
+    --white: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(0,0,0,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #1a1a1a;
+    padding: 0 5%;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-wordmark { font-size: 22px; font-weight: 900; color: var(--white); letter-spacing: -0.5px; }
+  .nav-product {
+    font-size: 13px; font-weight: 700; color: var(--green);
+    letter-spacing: 2px; text-transform: uppercase;
+    padding: 3px 10px; border: 1.5px solid #06C16740;
+    border-radius: 20px; background: #06C16710;
+  }
+  .nav-back {
+    color: var(--text-secondary); font-size: 14px; font-weight: 500;
+    text-decoration: none; transition: color 0.2s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .nav-back:hover { color: var(--white); }
+
+  main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 120px 5% 100px;
+  }
+
+  /* PROFILE HEADER */
+  .profile-header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+  .profile-avatar {
+    width: 96px; height: 96px;
+    border-radius: 24px;
+    background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+    border: 1px solid #2a2a2a;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 44px;
+    flex-shrink: 0;
+  }
+  .profile-name { font-size: 30px; font-weight: 900; letter-spacing: -0.8px; margin-bottom: 4px; }
+  .profile-specialty { font-size: 15px; color: var(--text-secondary); margin-bottom: 10px; }
+  .profile-stats { display: flex; gap: 16px; font-size: 13.5px; color: var(--text-muted); flex-wrap: wrap; }
+  .profile-stats b { color: var(--white); }
+
+  .verified-row {
+    background: var(--dark);
+    border: 1px solid #1e1e1e;
+    border-radius: 14px;
+    padding: 14px 18px;
+    display: flex; gap: 12px; align-items: center;
+    margin-bottom: 20px;
+  }
+  .verified-icon { font-size: 22px; flex-shrink: 0; }
+  .verified-title { font-size: 13.5px; font-weight: 700; }
+  .verified-desc { font-size: 11.5px; color: var(--text-muted); margin-top: 1px; }
+
+  /* TU RED DICE - momento de valor */
+  .trust-block {
+    background: linear-gradient(135deg, #06C16718 0%, #06C16706 100%);
+    border: 1.5px solid #06C16750;
+    border-radius: 20px;
+    padding: 22px;
+    margin-bottom: 24px;
+    animation: glow-in 0.6s ease;
+  }
+  .trust-block.empty {
+    background: var(--dark);
+    border: 1px solid #1e1e1e;
+  }
+  @keyframes glow-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .trust-block-label {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11.5px; font-weight: 800; color: var(--green);
+    letter-spacing: 1px; text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .trust-block.empty .trust-block-label { color: var(--text-muted); }
+
+  .trust-reviews { display: flex; flex-direction: column; gap: 16px; }
+  .trust-review {
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .trust-review-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .trust-review-body { flex: 1; }
+  .trust-review-name { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+  .trust-review-quote { font-size: 13px; color: #ddd; line-height: 1.5; margin-bottom: 6px; }
+  .trust-review-meta { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--text-muted); }
+  .trust-review-stars { color: var(--green); font-size: 11.5px; }
+
+  .empty-text { font-size: 13.5px; color: var(--text-muted); line-height: 1.6; }
+
+  .section-label {
+    font-size: 10.5px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px;
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .info-card {
+    background: var(--dark);
+    border: 1px solid #1e1e1e;
+    border-radius: 14px;
+    padding: 14px 16px;
+  }
+  .info-card-label { font-size: 10.5px; color: var(--text-muted); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .info-card-value { font-size: 18px; font-weight: 800; }
+
+  /* HIRE BAR */
+  .hire-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    background: var(--dark);
+    border: 1px solid #1e1e1e;
+    border-radius: 18px;
+    padding: 22px 26px;
+    flex-wrap: wrap;
+  }
+  .price-label { font-size: 12px; color: var(--text-muted); margin-bottom: 3px; }
+  .price-value { font-size: 22px; font-weight: 900; }
+
+  .btn-primary {
+    background: var(--green);
+    color: var(--black);
+    font-size: 15px;
+    font-weight: 800;
+    padding: 16px 32px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s;
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
+    white-space: nowrap;
+  }
+  .btn-primary:hover { background: var(--green-dark); }
+
+  .page-actions {
+    margin-top: 28px;
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--white);
+    font-size: 14px;
+    font-weight: 600;
+    padding: 14px 24px;
+    border-radius: 50px;
+    border: 1.5px solid #333;
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.2s;
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
+  }
+  .btn-secondary:hover { border-color: #555; }
+
+  footer {
+    background: var(--black);
+    border-top: 1px solid #1a1a1a;
+    padding: 32px 5%;
+    text-align: center;
+    margin-top: 40px;
+  }
+  .footer-note { font-size: 11px; color: var(--text-muted); max-width: 500px; margin: 0 auto; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <span class="nav-wordmark">UberHome</span>
+    <span class="nav-product">Servicios</span>
+  </a>
+  <a href="electricista.html" class="nav-back">← Volver a electricistas</a>
+</nav>
+
+<main id="mainContent">
+  <!-- Populated by JS -->
+</main>
+
+<footer>
+  <div class="footer-note">UberHome Servicios es un proyecto académico de investigación de producto. No está afiliado ni representa a Uber Technologies Inc.</div>
+</footer>
+
+<script>
+  const tecnicos = {
+    'daniela-vargas': {
+      nombre: 'Daniela Vargas', avatar: '👩‍🔧', especialidad: 'Electricidad industrial y residencial',
+      rating: 4.9, servicios: 203, tiempo: '18 min', precio: '$58.000',
+      amigos: [
+        { nombre: 'María López', avatar: '👩', quote: '"Rápida y ordenada, dejó el tablero perfecto."', stars: 5, cuando: 'Hace 1 semana' },
+        { nombre: 'Jorge Serrano', avatar: '👨', quote: '"Resolvió un corto que llevaba meses molestando."', stars: 5, cuando: 'Hace 3 semanas' },
+        { nombre: 'Valentina Rueda', avatar: '👩‍🦱', quote: '"Muy profesional, explica todo antes de hacerlo."', stars: 4, cuando: 'Hace 2 meses' }
+      ]
+    },
+    'andres-pena': {
+      nombre: 'Andrés Peña', avatar: '🧑‍🔧', especialidad: 'Instalaciones residenciales',
+      rating: 4.8, servicios: 94, tiempo: '20 min', precio: '$50.000',
+      amigos: [
+        { nombre: 'María López', avatar: '👩', quote: '"Instaló todos los tomacorrientes de la sala en un día."', stars: 5, cuando: 'Hace 2 semanas' },
+        { nombre: 'Jorge Serrano', avatar: '👨', quote: '"Buen precio y llegó antes de lo esperado."', stars: 4, cuando: 'Hace 1 mes' }
+      ]
+    },
+    'camilo-restrepo': {
+      nombre: 'Camilo Restrepo', avatar: '🧑‍🔧', especialidad: 'Emergencias eléctricas 24h',
+      rating: 4.7, servicios: 78, tiempo: '15 min', precio: '$47.000',
+      amigos: [
+        { nombre: 'Jorge Serrano', avatar: '👨', quote: '"Vino un domingo en la noche por una emergencia, muy responsable."', stars: 5, cuando: 'Hace 5 días' }
+      ]
+    },
+    'luisa-cortes': {
+      nombre: 'Luisa Cortés', avatar: '👩‍🔧', especialidad: 'Cortos y tableros eléctricos',
+      rating: 4.9, servicios: 156, tiempo: '12 min', precio: '$55.000',
+      amigos: [
+        { nombre: 'Valentina Rueda', avatar: '👩‍🦱', quote: '"Detectó el problema en minutos, súper recomendada."', stars: 5, cuando: 'Hace 3 semanas' }
+      ]
+    },
+    'miguel-rojas': {
+      nombre: 'Miguel Rojas', avatar: '🧑‍🔧', especialidad: 'Iluminación e instalaciones',
+      rating: 4.6, servicios: 61, tiempo: '25 min', precio: '$42.000',
+      amigos: []
+    }
+  };
+
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('tecnico') || 'daniela-vargas';
+  const t = tecnicos[id] || tecnicos['daniela-vargas'];
+
+  const trustBlockHtml = t.amigos.length > 0
+    ? `
+      <div class="trust-block">
+        <div class="trust-block-label">👥 Tu red dice</div>
+        <div class="trust-reviews">
+          ${t.amigos.map(a => `
+            <div class="trust-review">
+              <div class="trust-review-avatar">${a.avatar}</div>
+              <div class="trust-review-body">
+                <div class="trust-review-name">${a.nombre}</div>
+                <div class="trust-review-quote">${a.quote}</div>
+                <div class="trust-review-meta">
+                  <span class="trust-review-stars">${'⭐'.repeat(a.stars)}</span>
+                  <span>· ${a.cuando}</span>
+                </div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `
+    : `
+      <div class="trust-block empty">
+        <div class="trust-block-label">👥 Tu red dice</div>
+        <div class="empty-text">Ninguno de tus contactos ha usado a este técnico todavía. Sé el primero en tu red en calificarlo.</div>
+      </div>
+    `;
+
+  document.getElementById('mainContent').innerHTML = `
+    <div class="profile-header">
+      <div class="profile-avatar">${t.avatar}</div>
+      <div>
+        <div class="profile-name">${t.nombre}</div>
+        <div class="profile-specialty">${t.especialidad}</div>
+        <div class="profile-stats">
+          <span>⭐ <b>${t.rating}</b></span>
+          <span><b>${t.servicios}</b> servicios</span>
+          <span><b>${t.tiempo}</b> de llegada</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="verified-row">
+      <div class="verified-icon">✅</div>
+      <div>
+        <div class="verified-title">Verificado por UberHome</div>
+        <div class="verified-desc">Antecedentes · Certificación · Seguro</div>
+      </div>
+    </div>
+
+    ${trustBlockHtml}
+
+    <div class="section-label">Detalles del servicio</div>
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="info-card-label">Calificación</div>
+        <div class="info-card-value">${t.rating} ⭐</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-label">Servicios</div>
+        <div class="info-card-value">${t.servicios}</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-label">Llegada estimada</div>
+        <div class="info-card-value">${t.tiempo}</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-label">Especialidad</div>
+        <div class="info-card-value">Electricidad</div>
+      </div>
+    </div>
+
+    <div class="hire-bar">
+      <div>
+        <div class="price-label">Tarifa estimada</div>
+        <div class="price-value">${t.precio}</div>
+      </div>
+      <a class="btn-primary" href="confirmacion.html?tecnico=${encodeURIComponent(t.nombre)}&especialidad=${encodeURIComponent('Electricidad')}&tiempo=${encodeURIComponent(t.tiempo)}" onclick="hireTracking('${t.nombre}')">Contratar ahora</a>
+    </div>
+
+    <div class="page-actions">
+      <a href="electricista.html" class="btn-secondary">← Ver otros electricistas</a>
+    </div>
+  `;
+
+  function hireTracking(nombre) {
+    try {
+      const data = JSON.parse(localStorage.getItem('uberhome_data') || '{}');
+      if (!data.hires) data.hires = [];
+      data.hires.push({ ts: new Date().toISOString(), tecnico: nombre, servicio: 'Electricidad' });
+      localStorage.setItem('uberhome_data', JSON.stringify(data));
+    } catch (e) {}
+  }
+
+  function trackFlow(screen) {
+    try {
+      const flow = JSON.parse(localStorage.getItem('uberhome_mvp_flow') || '[]');
+      flow.push({ screen: screen + ':' + id, ts: new Date().toISOString() });
+      localStorage.setItem('uberhome_mvp_flow', JSON.stringify(flow));
+    } catch (e) {}
+  }
+  trackFlow('tecnico-detalle');
+</script>
+
+</body>
+</html>

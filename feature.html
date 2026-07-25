@@ -260,29 +260,13 @@
     margin: 0 auto 48px;
   }
 
-  .email-form {
+  .start-actions {
     display: flex;
-    gap: 10px;
-    max-width: 420px;
-    margin: 0 auto 16px;
-    flex-wrap: wrap;
+    gap: 14px;
     justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
   }
-  .email-input {
-    flex: 1;
-    min-width: 220px;
-    background: #111;
-    border: 1.5px solid #2a2a2a;
-    color: var(--white);
-    font-size: 14px;
-    padding: 14px 18px;
-    border-radius: 50px;
-    outline: none;
-    font-family: 'Inter', sans-serif;
-    transition: border-color 0.2s;
-  }
-  .email-input:focus { border-color: var(--green); }
-  .email-input::placeholder { color: var(--text-muted); }
 
   .btn-primary {
     background: var(--green);
@@ -296,22 +280,27 @@
     font-family: 'Inter', sans-serif;
     transition: background 0.2s;
     white-space: nowrap;
+    text-decoration: none;
+    display: inline-block;
   }
   .btn-primary:hover { background: var(--green-dark); }
 
-  .form-note { font-size: 12px; color: var(--text-muted); }
-  .form-success {
-    display: none;
-    background: #06C16720;
-    border: 1px solid #06C16740;
-    border-radius: 12px;
-    padding: 16px 24px;
-    color: var(--green);
+  .btn-secondary {
+    background: transparent;
+    color: var(--white);
     font-size: 14px;
-    font-weight: 600;
-    max-width: 420px;
-    margin: 0 auto;
+    font-weight: 700;
+    padding: 14px 24px;
+    border-radius: 50px;
+    border: 1.5px solid #333;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: border-color 0.2s;
+    white-space: nowrap;
+    text-decoration: none;
+    display: inline-block;
   }
+  .btn-secondary:hover { border-color: #555; }
 
   .back-link {
     display: inline-flex;
@@ -445,18 +434,14 @@
 <section class="coming-soon">
   <div class="coming-soon-bg"></div>
   <div class="coming-soon-content">
-    <div class="coming-badge">Próximamente</div>
-    <h2 class="coming-title">Coming<br><span>Soon.</span></h2>
-    <p class="coming-sub">La Red de Confianza estará disponible pronto en UberHome. Deja tu correo y sé de los primeros en activarla.</p>
+    <div class="coming-badge">Disponible para probar</div>
+    <h2 class="coming-title">Empieza<br><span>ahora.</span></h2>
+    <p class="coming-sub">Crea tu Red de Confianza o contrata un servicio directamente — este prototipo ya es interactivo.</p>
 
-    <div class="email-form" id="emailForm">
-      <input type="email" class="email-input" id="emailInput" placeholder="tu@correo.com">
-      <button class="btn-primary" onclick="submitEmail()">Avisarme</button>
+    <div class="start-actions">
+      <a href="crear-red.html" class="btn-primary" onclick="trackCTA('crear_red')">Crear Red de Confianza →</a>
+      <a href="contratar.html" class="btn-secondary" onclick="trackCTA('contratar_servicio')">Contratar un servicio →</a>
     </div>
-    <div class="form-success" id="formSuccess">
-      ✓ Listo. Te avisamos cuando la Red de Confianza esté disponible.
-    </div>
-    <div class="form-note">Sin spam. Solo te avisamos cuando esté lista.</div>
 
     <br>
     <a href="index.html" class="back-link">← Volver a UberHome Servicios</a>
@@ -482,27 +467,14 @@
     } catch(e) {}
   }
 
-  // Handle email submission
-  function submitEmail() {
-    const email = document.getElementById('emailInput').value;
-    if (!email || !email.includes('@')) {
-      document.getElementById('emailInput').style.borderColor = '#ff4444';
-      return;
-    }
-
-    // Store email locally
+  // Track generic CTAs
+  function trackCTA(name) {
     try {
       const data = JSON.parse(localStorage.getItem('uberhome_data') || '{}');
-      if (!data.emails) data.emails = [];
-      data.emails.push({ email, ts: new Date().toISOString() });
+      if (!data.cta_clicks) data.cta_clicks = [];
+      data.cta_clicks.push({ ts: new Date().toISOString(), cta: name });
       localStorage.setItem('uberhome_data', JSON.stringify(data));
-
-      const total = parseInt(localStorage.getItem('uberhome_email_count') || '0') + 1;
-      localStorage.setItem('uberhome_email_count', total);
     } catch(e) {}
-
-    document.getElementById('emailForm').style.display = 'none';
-    document.getElementById('formSuccess').style.display = 'block';
   }
 
   trackFeaturePageVisit();
@@ -511,7 +483,6 @@
   window.showStats = function() {
     console.log('=== UberHome Feature Page Stats ===');
     console.log('Feature page visits:', localStorage.getItem('uberhome_feature_page_visits'));
-    console.log('Email signups:', localStorage.getItem('uberhome_email_count'));
     console.log('Full data:', JSON.parse(localStorage.getItem('uberhome_data') || '{}'));
   };
 </script>

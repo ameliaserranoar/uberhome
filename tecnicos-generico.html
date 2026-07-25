@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Técnicos disponibles — UberHome</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+  :root {
+    --green: #06C167;
+    --green-dark: #059952;
+    --black: #000000;
+    --dark: #111111;
+    --gray: #1a1a1a;
+    --text-secondary: #888;
+    --text-muted: #555;
+    --white: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(0,0,0,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #1a1a1a;
+    padding: 0 5%;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-wordmark { font-size: 22px; font-weight: 900; color: var(--white); letter-spacing: -0.5px; }
+  .nav-product {
+    font-size: 13px; font-weight: 700; color: var(--green);
+    letter-spacing: 2px; text-transform: uppercase;
+    padding: 3px 10px; border: 1.5px solid #06C16740;
+    border-radius: 20px; background: #06C16710;
+  }
+  .nav-back {
+    color: var(--text-secondary); font-size: 14px; font-weight: 500;
+    text-decoration: none; transition: color 0.2s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .nav-back:hover { color: var(--white); }
+
+  main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 120px 5% 100px;
+  }
+
+  .page-header { margin-bottom: 36px; }
+  .section-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--green); margin-bottom: 14px;
+  }
+  .page-title {
+    font-size: clamp(28px, 4vw, 42px); font-weight: 900;
+    line-height: 1.1; letter-spacing: -1px; margin-bottom: 12px;
+  }
+  .page-sub { font-size: 16px; color: var(--text-secondary); line-height: 1.7; max-width: 560px; }
+
+  .tech-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .tech-card {
+    background: var(--dark);
+    border: 1px solid #1e1e1e;
+    border-radius: 18px;
+    padding: 20px 22px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    text-decoration: none;
+    color: var(--white);
+    transition: border-color 0.2s, transform 0.15s;
+  }
+  .tech-card:hover { border-color: #333; transform: translateY(-1px); }
+
+  .tech-avatar {
+    width: 58px; height: 58px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+    border: 1px solid #2a2a2a;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+    flex-shrink: 0;
+  }
+
+  .tech-info { flex: 1; min-width: 0; }
+  .tech-name { font-size: 16px; font-weight: 800; margin-bottom: 3px; }
+  .tech-specialty { font-size: 12.5px; color: var(--text-muted); margin-bottom: 8px; }
+  .tech-stats { display: flex; gap: 14px; font-size: 12px; color: var(--text-secondary); flex-wrap: wrap; }
+  .tech-stats b { color: var(--white); }
+
+  .tech-price { text-align: right; flex-shrink: 0; }
+  .tech-price-val { font-size: 15px; font-weight: 800; }
+  .tech-price-label { font-size: 10.5px; color: var(--text-muted); margin-top: 2px; }
+  .tech-chevron { color: var(--text-muted); font-size: 20px; flex-shrink: 0; }
+
+  .no-network-note {
+    background: var(--dark);
+    border: 1px solid #1e1e1e;
+    border-radius: 14px;
+    padding: 14px 18px;
+    font-size: 12.5px;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+  .no-network-note b { color: var(--text-secondary); }
+
+  .page-actions {
+    margin-top: 40px;
+    padding-top: 28px;
+    border-top: 1px solid #1a1a1a;
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--white);
+    font-size: 14px;
+    font-weight: 600;
+    padding: 14px 24px;
+    border-radius: 50px;
+    border: 1.5px solid #333;
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.2s;
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
+  }
+  .btn-secondary:hover { border-color: #555; }
+
+  footer {
+    background: var(--black);
+    border-top: 1px solid #1a1a1a;
+    padding: 32px 5%;
+    text-align: center;
+  }
+  .footer-note { font-size: 11px; color: var(--text-muted); max-width: 500px; margin: 0 auto; line-height: 1.6; }
+
+  @media (max-width: 600px) {
+    .tech-card { flex-wrap: wrap; }
+    .tech-price { margin-left: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <span class="nav-wordmark">UberHome</span>
+    <span class="nav-product">Servicios</span>
+  </a>
+  <a href="contratar.html" class="nav-back">← Volver</a>
+</nav>
+
+<main>
+  <div class="page-header">
+    <div class="section-label" id="serviceLabel">Servicio</div>
+    <h1 class="page-title" id="serviceTitle">Técnicos disponibles</h1>
+    <p class="page-sub">Técnicos verificados cerca de ti, disponibles ahora.</p>
+  </div>
+
+  <div class="no-network-note">👥 Ninguno de tus contactos ha usado técnicos de esta categoría todavía. La <b>Red de Confianza</b> está más desarrollada en Electricidad.</div>
+
+  <div class="tech-list" id="techList"></div>
+
+  <div class="page-actions">
+    <a href="contratar.html" class="btn-secondary">← Ver otros servicios</a>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-note">UberHome Servicios es un proyecto académico de investigación de producto. No está afiliado ni representa a Uber Technologies Inc.</div>
+</footer>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const servicio = params.get('servicio') || 'Servicio';
+  const icono = params.get('icono') || '🔧';
+
+  document.getElementById('serviceLabel').textContent = servicio;
+  document.getElementById('serviceTitle').textContent = servicio + ' disponibles';
+  document.title = servicio + ' disponibles — UberHome';
+
+  const genericos = [
+    { nombre: 'Ricardo Peña', rating: 4.7, servicios: 68, tiempo: '22 min', precio: '$40.000' },
+    { nombre: 'Sandra Morales', rating: 4.8, servicios: 112, tiempo: '17 min', precio: '$45.000' },
+    { nombre: 'Julián Castaño', rating: 4.6, servicios: 39, tiempo: '30 min', precio: '$38.000' }
+  ];
+
+  document.getElementById('techList').innerHTML = genericos.map(g => `
+    <a href="confirmacion.html?tecnico=${encodeURIComponent(g.nombre)}&especialidad=${encodeURIComponent(servicio)}&tiempo=${encodeURIComponent(g.tiempo)}" class="tech-card" onclick="hireTracking('${g.nombre}')">
+      <div class="tech-avatar">${icono}</div>
+      <div class="tech-info">
+        <div class="tech-name">${g.nombre}</div>
+        <div class="tech-specialty">${servicio}</div>
+        <div class="tech-stats">
+          <span>⭐ <b>${g.rating}</b></span>
+          <span><b>${g.servicios}</b> servicios</span>
+          <span><b>${g.tiempo}</b></span>
+        </div>
+      </div>
+      <div class="tech-price">
+        <div class="tech-price-val">${g.precio}</div>
+        <div class="tech-price-label">tarifa est.</div>
+      </div>
+      <div class="tech-chevron">›</div>
+    </a>
+  `).join('');
+
+  function hireTracking(nombre) {
+    try {
+      const data = JSON.parse(localStorage.getItem('uberhome_data') || '{}');
+      if (!data.hires) data.hires = [];
+      data.hires.push({ ts: new Date().toISOString(), tecnico: nombre, servicio });
+      localStorage.setItem('uberhome_data', JSON.stringify(data));
+    } catch (e) {}
+  }
+
+  function trackFlow(screen) {
+    try {
+      const flow = JSON.parse(localStorage.getItem('uberhome_mvp_flow') || '[]');
+      flow.push({ screen: screen + ':' + servicio, ts: new Date().toISOString() });
+      localStorage.setItem('uberhome_mvp_flow', JSON.stringify(flow));
+    } catch (e) {}
+  }
+  trackFlow('tecnicos-generico');
+</script>
+
+</body>
+</html>
